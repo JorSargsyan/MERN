@@ -3,8 +3,6 @@ const connectDb = require("./config/db")
 
 const app = express();
 
-connectDb();
-
 app.get("/",(req,res)=>{
     res.send("API running");
 })
