@@ -64,8 +64,7 @@ const ProfileSchema = new mongoose.Schema({
                 required:true
             },
             degree:{
-                type:String,
-                required:true
+                type:String
             },
             fieldofstudy:{
                 type:String
@@ -75,8 +74,7 @@ const ProfileSchema = new mongoose.Schema({
                 required:true
             },
             to:{
-                type:Date,
-                required:true
+                type:Date
             },
             current:{
                 type:Boolean,
