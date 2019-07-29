@@ -11,7 +11,7 @@ const ProfileGithub = ({ username, getGithubRepos, repos }) => {
     }, [getGithubRepos, username])
 
     return (
-        <div>
+
             <div className="profile-github">
                 <h2 className="text-primary my-1">Github Repos</h2>
                 {
@@ -47,13 +47,12 @@ const ProfileGithub = ({ username, getGithubRepos, repos }) => {
                     )
                 }
             </div>
-        </div>
     )
 }
 
 ProfileGithub.propTypes = {
     username: PropTypes.string.isRequired,
-    repos: PropTypes.object.isRequired,
+    repos: PropTypes.array.isRequired,
 }
 
 const mapStateToProps = (state) => ({
