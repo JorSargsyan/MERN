@@ -3,6 +3,7 @@ const router = express.Router();
 const authMiddleware = require("../../middleware/auth");
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
+const Post = require("../../models/Post");
 const { check, validationResult } = require("express-validator");
 const request = require("request");
 const config = require("config");
@@ -69,7 +70,7 @@ router.post("/", [authMiddleware, [
    if (status) profileFields.status = status;
    if (githubusername) profileFields.githubusername = githubusername;
    if (skills) {
-      profileFields.skills = skills.split(",").map(i => i.trim());
+      profileFields.skills = skills.split(",").map(i=>i.trim());
    }
 
    //Build Social Object
@@ -156,6 +157,10 @@ router.get("/user/:user_id", async (req, res) => {
 
 router.delete("/", authMiddleware, async (req, res) => {
    try {
+
+      //remove posts
+      await Post.deleteMany({user:req.user.id});
+
       //remove profile
       await Profile.findOneAndRemove({ user: req.user.id });
       //remove user

@@ -53,7 +53,7 @@ function EditProfile({ profile: { profile, loading }, createUpdateProfile, histo
             facebook: loading || !profile.social ? "" : profile.social.facebook,
             linkedin: loading || !profile.social ? "" : profile.social.linkedin,
         })
-    }, [loading]);
+    }, [loading,getCurrentProfile]);
 
 
     const onChange = (e) => setFormData({
