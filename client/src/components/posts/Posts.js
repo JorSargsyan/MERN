@@ -4,6 +4,7 @@ import {connect} from "react-redux"
 import {getPosts} from "../../actions/post"
 import Spinner from "../layout/Spinner"
 import PostItem from "../posts/PostItem"
+import PostForm from "../posts/PostForm"
 
 function Posts({post: {posts,loading},getPosts}) {
 
@@ -19,6 +20,8 @@ function Posts({post: {posts,loading},getPosts}) {
               <i className="fas fa-user"></i>
               Welcome to the community
           </p>
+
+          <PostForm />
             <div className="posts">
                 {
                     posts.map((post)=>{
