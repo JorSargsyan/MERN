@@ -22,3 +22,6 @@ export const ADD_POST = 'ADD_POST'
 export const GET_POST = 'GET_POST'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const REMOVE_COMMENT = 'REMOVE_COMMENT'
+export const UPLOAD_PROF_PIC_SUCCESS = 'UPLOAD_PROF_PIC_SUCCESS';
+export const UPLOAD_PDF = 'UPLOAD_PDF';
+export const DELETE_PDF = 'DELETE_PDF';

@@ -4,17 +4,18 @@ import Moment from "react-moment"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import { addLike, removeLike, deletePost } from "../../actions/post"
-import Post from '../post/Post';
-
-function PostItem({ deletePost, addLike, removeLike, post: { _id, text, name, avatar, user, likes, comments, date }, auth, showActions }) {
+function PostItem({ deletePost,detail = false, addLike, removeLike, post: { _id, text, name, user, likes, comments, date,postPic }, auth, showActions }) {
     return (
-        <Fragment>
-            <div className="post bg-white p-1 my-1">
+        <div className={`post-item-area ${detail && 'post-item-area-detail'}`}>
+            <div className="post-img-area">
+                <img className="post-image" src={`${postPic}`} alt="postPic"/>
+            </div>
+            <div className="post bg-white p-1">
                 <div>
-                    <Link to={`/profile/${user}`}>
+                    <Link to={`/profile/${user._id}`}>
                         <img
-                            className="round-img"
-                            src={avatar}
+                            className="round-img list-avatar-xs"
+                            src={user.avatar}
                             alt=""
                         />
                         <h4>{name}</h4>
@@ -40,13 +41,13 @@ function PostItem({ deletePost, addLike, removeLike, post: { _id, text, name, av
                                 Discussion {comments.length > 0 && <span className='comment-count'>{comments.length}</span>}
                             </Link>
                             {
-                                !auth.loading && user == auth.user._id && (
+                                !auth.loading && user._id == auth.user._id && (
                                     <button
                                         onClick={e => deletePost(_id)}
                                         type="button"
                                         className="btn btn-danger"
                                     >
-                                        <i className="fas fa-times"></i>
+                                        <i className="fas fa-trash"></i>
                                     </button>
                                 )
                             }
@@ -58,7 +59,7 @@ function PostItem({ deletePost, addLike, removeLike, post: { _id, text, name, av
 
                 </div>
             </div>
-        </Fragment>
+        </div>
     )
 }
 

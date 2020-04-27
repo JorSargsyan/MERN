@@ -13,6 +13,7 @@ import Profiles from "./components/profiles/Profiles"
 import Profile from "./components/profile/Profile"
 import Posts from "./components/posts/Posts"
 import Post from "./components/post/Post"
+import MapView from './components/map';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import './App.css';
 //redux
@@ -21,6 +22,7 @@ import { Provider } from "react-redux"
 import { loadUser } from "./actions/auth"
 import setAuthToken from "./utils/setAuthToken"
 import PrivateRoute from "./components/routing/PrivateRoute"
+import PostForm from './components/posts/PostForm';
 
 
 
@@ -53,7 +55,9 @@ const App = () => {
               <PrivateRoute exact path="/edit-profile" component={EditProfile} />
               <PrivateRoute exact path="/add-experience" component={AddExperience} />
               <PrivateRoute exact path="/add-education" component={AddEducation} />
+              <Route exact path="/map" component={MapView} />
               <PrivateRoute exact path="/posts" component={Posts} />
+              <PrivateRoute exact path="/posts/new" component={PostForm} />
               <PrivateRoute exact path="/post/:id" component={Post} />
             </Switch>
           </section>

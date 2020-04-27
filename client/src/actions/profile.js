@@ -1,6 +1,17 @@
 import axios from "axios"
 import { setAlert } from "./alert"
-import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE, DELETE_ACCOUNT ,CLEAR_PROFILE,GET_PROFILES ,GET_GITREPOS } from "./types"
+import {
+    GET_PROFILE,
+    PROFILE_ERROR,
+    UPDATE_PROFILE,
+    DELETE_ACCOUNT,
+    CLEAR_PROFILE,
+    GET_PROFILES,
+    GET_GITREPOS,
+    UPLOAD_PROF_PIC_SUCCESS,
+    UPLOAD_PDF,
+    DELETE_PDF,
+} from "./types"
 
 
 //get current user's profiles 
@@ -32,15 +43,17 @@ export const getProfiles = () => {
     return async (dispatch) => {
         try {
             const res = await axios.get("api/profile");
-            
+
             dispatch({
-                type:CLEAR_PROFILE
+                type: CLEAR_PROFILE
             })
 
             dispatch({
                 type: GET_PROFILES,
                 payload: res.data
             })
+
+            return res.data;
 
 
         } catch (error) {
@@ -134,6 +147,98 @@ export const createUpdateProfile = (formData, history, edit = false) => {
             if (errors) {
                 errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
             }
+
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: {
+                    msg: error.response.statusText,
+                    status: error.response.status
+                }
+            })
+        }
+    }
+}
+
+export const uploadProfPic = (data) => {
+    return async dispatch => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            };
+            const body = {
+                imageBase64: data
+            }
+
+            const res = await axios.put("/api/users/uploadAvatar", JSON.stringify(body), config);
+
+
+            dispatch({
+                type: UPLOAD_PROF_PIC_SUCCESS,
+                payload: res.data
+            })
+
+            dispatch(setAlert("Profile picture Added!", "success"));
+        }
+        catch (error) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: {
+                    msg: error.response.statusText,
+                    status: error.response.status
+                }
+            })
+        }
+    }
+};
+
+export const uploadPDF = (data) => {
+    return async dispatch => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            };
+
+            const res = await axios.put("/api/profile/uploadPDF", data, config);
+
+
+            dispatch({
+                type: UPLOAD_PDF,
+                payload: res.data
+            })
+
+            dispatch(setAlert("YOUR CV added!", "success"));
+        }
+        catch (error) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: {
+                    msg: error.response.statusText,
+                    status: error.response.status
+                }
+            })
+        }
+    }
+}
+
+export const deletePDF = () => {
+    return async (dispatch) => {
+        try {
+            const res = await axios.delete(`/api/profile/deletePDF`);
+
+            dispatch({
+                type: DELETE_PDF,
+                payload: res.data,
+            })
+
+
+            dispatch(setAlert("Your CV is deleted", "success"));
+
+
+        } catch (error) {
 
             dispatch({
                 type: PROFILE_ERROR,
@@ -256,7 +361,7 @@ export const deleteExperience = (id) => {
 
 
 //delete education
-export const deleteEducation= (id) => {
+export const deleteEducation = (id) => {
     return async (dispatch) => {
         try {
             const res = await axios.delete(`/api/profile/education/${id}`);

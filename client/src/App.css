@@ -218,6 +218,24 @@ img {
   border-radius: 50%;
 }
 
+.list-avatar{
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+}
+
+.list-avatar-sm{
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.list-avatar-xs{ 
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+
 .line {
   height: 1px;
   background: #ccc;
@@ -256,11 +274,6 @@ img {
   padding: 0.4rem;
   font-size: 1.2rem;
   border: 1px solid #ccc;
-}
-
-.form input[type='submit'],
-button {
-  font: inherit;
 }
 
 .form .social-input {
@@ -380,9 +393,6 @@ button {
   text-align: center;
 }
 
-.profile-top img {
-  width: 250px;
-}
 
 .profile-top .icons a {
   color: #fff;
@@ -448,12 +458,23 @@ button {
   flex-basis: 70%;
 }
 
+.google-map-container{
+  height: 600px;
+  position: unset!important;
+}
+
 .profile-github > div:last-child {
   flex: 3;
   flex-basis: 20%;
 }
 
 /* Posts Page */
+.posts {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
 .post-form .post-form-header {
   background: var(--primary-color);
   padding: 0.5rem;
@@ -461,17 +482,14 @@ button {
 
 .post {
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 1fr 10fr;
   grid-gap: 2rem;
   align-items: center;
+  background-color: #e4e4e4;
 }
 
 .post > div:first-child {
   text-align: center;
-}
-
-.post img {
-  width: 100px;
 }
 
 .post .comment-count {
@@ -561,6 +579,11 @@ button {
     flex-direction: column;
   }
 
+  .dash-buttons{
+    display: flex;
+  }
+
+  
   .dash-buttons a {
     display: block;
     width: 100%;

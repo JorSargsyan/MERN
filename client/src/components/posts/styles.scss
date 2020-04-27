@@ -1,0 +1,52 @@
+
+.post-img-container {
+    height: 500px;
+    width: 100%;
+    box-shadow:0px 0px 20px #d2d2d2;
+    margin: 15px 0;
+    position: relative;
+    overflow: hidden;
+
+    .post-img{
+        object-fit: contain;
+    }
+    .post-delete-btn {
+        background: white;
+        padding: 15px;
+        border-radius: 50%;
+        border: none;
+        box-shadow: 0 0 9px 3px #a9a8a8;
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        outline: none;
+        cursor: pointer;
+        .post-delete-icon {
+            font-size: 16px;
+            color: red;
+        }
+    }
+  }
+
+
+
+
+.post-item-area{
+    &.post-item-area-detail{
+        width: 100%;
+        margin: 15px 0;
+    }
+    width: 47%;
+    margin-bottom: 30px;
+    box-shadow: 0 0 13px 0px #545454;
+    margin: 15px;
+    
+  .post-img-area{
+    margin-bottom: -7px;
+    .post-image{
+        max-width: 100%;
+        height: 480px;
+        object-fit: cover;
+      }
+  }
+}

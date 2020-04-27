@@ -25,8 +25,14 @@ const ProfileSchema = new mongoose.Schema({
     bio:{
         type:String
     },
+    cv : {
+        type:String,
+    },
     githubusername:{
         type:String
+    },
+    geoLocation : {
+        type: Object,
     },
     experience:[
         {

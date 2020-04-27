@@ -5,31 +5,44 @@ import PropTypes from "prop-types"
 import { logout } from "../../actions/auth"
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+    const handleLogout = () => {
+        logout();
+    }
+
     const authLinks = (
-        <ul>
-            <li>
-                <Link to="/profiles">
-                    Developers
-                </Link>
-            </li>
-            <li>
-                <Link to="/posts">
-                    Posts
-                </Link>
-            </li>
-            <li>
-                <a href="#" onClick={()=>logout()}>
-                    <i className="fas fa-sign-out-alt"></i>
-                    {" "}
-                    <span className="hide-sm">Logout</span>
-                </a>
-            </li>
-            <li>
-                <Link to="/dashboard">
-                    <i className="fas fa-sign-out-alt"></i>
-                    Dashboard
-                </Link>
-            </li>
+        <ul style={{width: 'calc(100% - 260px)', justifyContent: 'space-between'}}>
+            <div style={{display: 'flex' }}>
+                <li>
+                    <Link to="/profiles">
+                        Developers
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/posts">
+                        Posts
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/map">
+                        Map
+                    </Link>
+                </li>
+            </div>
+            <div style={{display: 'flex' }}>
+                <li>
+                    <a href="#" onClick={handleLogout}>
+                        <i className="fas fa-sign-out-alt"></i>
+                        {" "}
+                        <span className="hide-sm">Logout</span>
+                    </a>
+                </li>
+                <li>
+                    <Link to="/dashboard">
+                        <i className="fas fa-sign-out-alt"></i>
+                        Dashboard
+                    </Link>
+                </li>
+            </div>
         </ul>
     );
 
@@ -37,6 +50,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     const guessLinks = (
         <ul>
             <li><Link to="/profiles">Developers</Link></li>
+            <li><Link to="/map">Developer's Map</Link></li>
             <li><Link to="/register">Register</Link></li>
             <li><Link to="/login">Login</Link></li>
         </ul>

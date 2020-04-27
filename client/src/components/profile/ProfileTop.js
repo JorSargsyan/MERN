@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const ProfileTop = ({ profile: { status, company, location, website, social, user: { name, avatar } } }) => {
+const ProfileTop = ({ profile: { status, company, location, website,cv, social, user: { name, avatar } } }) => {
+    debugger;
     return (
         <div className="profile-top bg-primary p-2">
             <img
-                className="round-img my-1"
+                className="round-img my-1 list-avatar"
                 src={avatar}
                 alt=""
             />
@@ -18,6 +19,14 @@ const ProfileTop = ({ profile: { status, company, location, website, social, use
                     website && (
                         <a href={website} target="_blank" rel="noopener noreferrer">
                             <i className="fas fa-globe fa-2x"></i>
+                        </a>
+                    )
+                }
+
+                {
+                    cv && (
+                        <a href={cv} target="_blank" rel="noopener noreferrer">
+                            <i className="fas fa-file-pdf fa-2x"></i>
                         </a>
                     )
                 }

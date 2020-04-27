@@ -1,0 +1,11 @@
+.image-upload-section{
+    position: relative;
+    input{
+        display: none;
+    };
+    .submitIcon{
+        color: green;
+        font-size: 12;
+        position: absolute;
+    }
+}

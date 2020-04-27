@@ -6,25 +6,44 @@ const Post = require("../../models/Post");
 const { check, validationResult } = require("express-validator");
 const request = require("request");
 const config = require("config");
+const multer = require('multer');
+var fs = require('fs');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'client/public/uploads')
+    },
+    filename: function (req, file, cb) {
+        let fileExtension = file.originalname.split('.');
+        fileExtension = fileExtension[fileExtension.length - 1];
+        const fileName = `${file.fieldname}-${Date.now()}.${fileExtension}`;
+        file.saveName = fileName;
+      cb(null, file.saveName)
+    }
+  })
+   
+  var upload = multer({ storage: storage })
 
 
 //@route        POST "api/posts"
 //@desc         Create a post
 //@access       private
-router.post("/", [authMiddleware, [
+router.post("/", [authMiddleware,upload.single('postPic'), [
     check("text", "Text is required").not().isEmpty()
-]], async (req, res) => {
+]], async (req, res, next) => {
     const errors = validationResult(req);
+    const file = req.file;
     if (!errors.isEmpty()) {
         return res.status(400).json({ msg: errors.array() })
     }
-    try {
+    try { 
         const user = await User.findById(req.user.id).select("-password");
-
+        let fileExtension = file.originalname.split('.');
+        fileExtension = fileExtension[fileExtension.length - 1];
+        const fileURL = `/uploads/${file.saveName}`;
         const newPost = new Post({
             text: req.body.text,
+            postPic: fileURL,
             name: user.name,
-            avatar: user.avatar,
             user: req.user.id
         })
         const post = await newPost.save();
@@ -42,8 +61,7 @@ router.post("/", [authMiddleware, [
 //@access       private
 router.get("/", authMiddleware, async (req, res) => {
     try {
-        const posts = await Post.find().sort({ date: -1 });
-
+        const posts = await Post.find().populate('user').sort({ date: -1 });
         res.json(posts);
 
     } catch (error) {
@@ -58,7 +76,7 @@ router.get("/", authMiddleware, async (req, res) => {
 //@access       private
 router.get("/:id", authMiddleware, async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.id).populate('user').populate({path:'comments.user', select:['avatar','_id']});
         if (!post) {
             return res.status(404).json({ msg: "Post not found" });
         }
@@ -91,10 +109,10 @@ router.delete("/:id", authMiddleware, async (req, res) => {
         if(post.user.toString()/*post.user type is objectId(mongoDB)*/ !== req.user.id){
             return res.status(401).json({msg:"User not authorized"});
         }
-
-        await post.remove();
-        
-
+        await fs.unlink(`client/public/${post.postPic}`,async () => {
+            await post.remove();
+        });
+   
         res.json({msg:"Post removed"});
 
     } catch (error) {
@@ -182,13 +200,12 @@ router.post("/comment/:id", [authMiddleware,[
 
 
     try {
-        const user = await User.findById(req.user.id).select("-password");
+        const user = await User.findById(req.user.id).select("-password").populate('user').populate({path:'comments.user', select:['avatar','_id']});
         const post = await Post.findById(req.params.id);
 
         const newComment = {
             text:req.body.text,
             name : user.name,
-            avatar : user.avatar,
             user : req.user.id
         }
 

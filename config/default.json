@@ -2,5 +2,7 @@
     "MongoURI" : "mongodb+srv://jora123:jora123@devconnector-d1adz.mongodb.net/test?retryWrites=true&w=majority",
     "jwtSecret" : "Kjuj",
     "githubClientId":"a861b5e4ec7f54c98066",
-    "githubSecret":"c7f92528aa895438e3a53146134e58224888a797"
+    "githubSecret":"c7f92528aa895438e3a53146134e58224888a797",
+    "googleGeocodeAPI":"https://maps.googleapis.com/maps/api/geocode/json",
+    "googleAPIKey": "AIzaSyCfVgS-lSNvFJ443ebUPiwP0fGBVdo_99w"
 }

@@ -1,35 +1,74 @@
-import React, { useEffect, Fragment } from 'react'
-import { connect } from "react-redux"
-import { getCurrentProfile } from "../../actions/profile"
-import PropTypes from "prop-types"
+import React, { useEffect, Fragment, useState } from 'react'
+import { useSelector, useDispatch } from "react-redux"
+import { getCurrentProfile, uploadProfPic } from "../../actions/profile"
 import Spinner from "../layout/Spinner"
 import { Link } from "react-router-dom"
 import DashboardActions from "./DashboardActions"
 import Experience from "../dashboard/Experience"
 import Education from "../dashboard/Education"
-import {deleteAccount} from "../../actions/profile"
+import {deleteAccount, deletePDF} from "../../actions/profile"
+import './styles.scss';
+import ImageUpload from './ImageUpload';
 
-function Dashboard({ auth: { user }, getCurrentProfile,deleteAccount, profile: { profile, loading } }) {
+function Dashboard() {
+    const [imageVal, setImageVal] = useState();
+
+    const user = useSelector(state => state.auth.user);
+    const profileData = useSelector(state => state.profile);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (user && user.avatar) {
+            setImageVal(user.avatar);
+        }
+    },[user])
 
     useEffect(() => {
-        getCurrentProfile();
-    }, [getCurrentProfile])
+        dispatch(getCurrentProfile());
+    }, [])
 
-    return loading === true ? <Spinner /> : <Fragment >
+
+    const handleUploadChange = (newImage) => {
+        setImageVal(newImage);
+    }
+
+    const handleImageUploadSubmit = () => {
+        dispatch(uploadProfPic(imageVal));
+    }
+
+    const handleDeleteCV = () => {
+        debugger;
+        dispatch(deletePDF());
+    }
+
+    return profileData.loading === true ? <Spinner /> : <Fragment >
         <h1 className="large text-primary">Dashboard</h1>
-        <p className="lead">
-            <i className="fas fa-user"></i>Welcome {user && user.name}
-        </p>
+        <div className="lead" style={{alignItems: 'center',justifyContent:'space-between',display: 'flex',width: '26vw'}}>
+            <i className="fas fa-user"></i>
+            <h4>Welcome {user && user.name}</h4>
+            <ImageUpload 
+                imageVal={imageVal}
+                handleChange={handleUploadChange}
+                handleSubmit={handleImageUploadSubmit}
+            />
+        </div>
 
-        {profile !== null && loading === false ?
+        {profileData.profile !== null && profileData.loading === false ?
             <Fragment>
                 <DashboardActions />
-                <Experience experience={profile.experience} />
-                <Education education={profile.education}/>
+                {
+                 profileData.profile.cv &&    
+                    <div>
+                        <h2 className="my-2">CV actions</h2>
+                        <a href={profileData.profile.cv} target="_blank" className="btn btn-light"><i className="fas fa-file-pdf text-primary"></i></a>
+                        <a onClick={handleDeleteCV}  className="btn btn-danger"><i className="fas fa-trash"></i></a>
+                    </div>
+                }
+               
+                <Experience experience={profileData.profile.experience} />
+                <Education education={profileData.profile.education}/>
                 <div className="my-2">
-                    <button onClick={()=>deleteAccount()} className="btn btn-danger"><i className="fas fa-user-minus"></i>  Delete my Account</button>
+                    <button onClick={()=>dispatch(deleteAccount())} className="btn btn-danger"><i className="fas fa-user-minus"></i>  Delete my Account</button>
                 </div>
-                
             </Fragment> :
             <Fragment>
                 <p>You have not created the profile</p>
@@ -38,18 +77,6 @@ function Dashboard({ auth: { user }, getCurrentProfile,deleteAccount, profile: {
     </Fragment>
 }
 
-Dashboard.propTypes = {
-    getCurrentProfile: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
-    profile: PropTypes.object.isRequired,
-    deleteAccount:PropTypes.func.isRequired,
-}
-
-const mapStateToProps = (state) => ({
-    auth: state.auth,
-    profile: state.profile
-})
 
 
-
-export default connect(mapStateToProps, { getCurrentProfile,deleteAccount })(Dashboard)
+export default Dashboard;

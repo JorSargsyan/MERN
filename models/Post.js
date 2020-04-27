@@ -3,23 +3,23 @@ const mongoose = require("mongoose");
 const PostSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users"
+        ref: "user"
     },
     text: {
         type: String,
         required: true
     },
-    name: {
-        type: String
+    postPic: {
+        type: String,
     },
-    avatar: {
+    name: {
         type: String
     },
     likes: [
         {
             user: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "users"
+                ref: "user"
             }
         }
     ],
@@ -27,15 +27,12 @@ const PostSchema = new mongoose.Schema({
         {
             user: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "users"
+                ref: "user"
             },
             text: {
                 type: String
             },
             name: {
-                type: String
-            },
-            avatar: {
                 type: String
             },
             date:{

@@ -2,9 +2,9 @@ import React,{Fragment,useEffect} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from "react-redux"
 import {getPosts} from "../../actions/post"
+import {Link} from 'react-router-dom';
 import Spinner from "../layout/Spinner"
 import PostItem from "../posts/PostItem"
-import PostForm from "../posts/PostForm"
 
 function Posts({post: {posts,loading},getPosts}) {
 
@@ -20,8 +20,7 @@ function Posts({post: {posts,loading},getPosts}) {
               <i className="fas fa-user"></i>
               Welcome to the community
           </p>
-
-          <PostForm />
+            <Link to="/posts/new" >Create a post</Link>
             <div className="posts">
                 {
                     posts.map((post)=>{

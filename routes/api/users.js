@@ -6,6 +6,7 @@ const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const authMiddleware = require("../../middleware/auth");
 
 
 //@route        POST "api/users"
@@ -76,5 +77,23 @@ router.post("/",[
     }
 
 })
+
+//@route        POST "api/user/uploadAvatar"
+//$desc         register user
+//@access       public
+
+router.put("/uploadAvatar", authMiddleware, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        user.avatar = req.body.imageBase64;
+       await user.save();
+       res.json(user);
+    }
+    catch (err) {
+       console.error(err.message);
+       return res.json({ msg: "Internal server error" });
+    }
+ })
+ 
 
 module.exports = router;

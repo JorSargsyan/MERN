@@ -7,6 +7,71 @@ const Post = require("../../models/Post");
 const { check, validationResult } = require("express-validator");
 const request = require("request");
 const config = require("config");
+const axios = require('axios');
+const multer = require('multer');
+var fs = require('fs');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'client/public/pdfUploads')
+    },
+    filename: function (req, file, cb) {
+        let fileExtension = file.originalname.split('.');
+        fileExtension = fileExtension[fileExtension.length - 1];
+        const fileName = `${file.fieldname}-${Date.now()}.${fileExtension}`;
+        file.saveName = fileName;
+      cb(null, file.saveName)
+    }
+  })
+   
+  var upload = multer({ storage: storage })
+
+
+
+
+router.put("/uploadPDF", [authMiddleware, upload.single('pdf')], async (req, res) => {
+   try {
+      const file = req.file;
+      if (!file) {
+          return res.status(400).json({ msg: 'SMT went wrong' })
+      }
+      let fileExtension = file.originalname.split('.');
+      fileExtension = fileExtension[fileExtension.length - 1];
+      const fileURL = `/pdfUploads/${file.saveName}`;
+      const profile = await Profile.findOne({user:req.user.id});
+      profile.cv = fileURL;
+      await profile.save();
+      res.json(profile);
+   }
+   catch (err) {
+      console.error(err.message);
+      return res.json({ msg: "Internal server error" });
+   }
+})
+
+router.delete("/deletePDF", authMiddleware, async (req, res) => {
+   try {
+       const profile = await Profile.findOne({user:req.user.id});
+       if (!profile) {
+           return res.status(404).json({ msg: "Profile not found" });
+       }
+
+       await fs.unlink(`client/public/${profile.cv}`,() => true);
+
+       profile.cv = undefined;
+
+       await profile.save();
+  
+       res.json(profile);
+
+   } catch (error) {
+       console.error(error.message);
+       if (!error.kind === "ObjectId") {
+           return res.status(404).json({ msg: "Profile not found" });
+       }
+       return res.status(500).send("Internal server error");
+   }
+})
+
 
 
 //@route        GET "api/profile/me"
@@ -70,7 +135,11 @@ router.post("/", [authMiddleware, [
    if (status) profileFields.status = status;
    if (githubusername) profileFields.githubusername = githubusername;
    if (skills) {
-      profileFields.skills = skills.split(",").map(i=>i.trim());
+      if (typeof skills !== 'object') {
+         profileFields.skills = skills.split(",").map(i=>i.trim());
+      } else {
+         profileFields.skills = skills;
+      }
    }
 
    //Build Social Object
@@ -82,6 +151,10 @@ router.post("/", [authMiddleware, [
    if (twitter) profileFields.social.twitter = twitter;
    if (linkedin) profileFields.social.linkedin = linkedin;
 
+
+   //build geolocation Data 
+   const geoLocationData = await axios.get(`${config.googleGeocodeAPI}?address=${profileFields.location}&key=${config.googleAPIKey}`);
+   profileFields.geoLocation = geoLocationData.data.results[0].geometry.location;
 
    try {
       let profile = await Profile.findOne({ user: req.user.id });
@@ -339,6 +412,7 @@ router.get("/github/:username", async (req, res) => {
       return res.json({ msg: "Internal server error" });
    }
 })
+
 
 
 module.exports = router;

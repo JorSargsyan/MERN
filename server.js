@@ -1,5 +1,7 @@
 const express = require("express")
 const connectDb = require("./config/db")
+const bodyParser= require('body-parser')
+
 
 const app = express();
 
@@ -7,7 +9,7 @@ connectDb();
 
 //Init Middleware 
 app.use(express.json({extended:false}));
-
+app.use(bodyParser.urlencoded({extended: true}))
 app.get("/",(req,res)=>{
     res.send("API running");
 })
