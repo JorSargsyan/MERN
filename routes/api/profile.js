@@ -223,6 +223,27 @@ router.get("/user/:user_id", async (req, res) => {
    }
 })
 
+//@route        GET "api/profile/:userid"
+//@desc         getProfilePosts
+//@access       public
+
+router.get('/getProfilePosts/:user_id', async (req, res) => {
+   try {
+      let posts = await Post.find({ user: req.params.user_id }).populate('user', ['name', 'avatar']);
+
+      if (!posts) {
+         return res.status(400).json({ msg: "Profile not found" });
+      }
+      else {
+         res.json(posts);
+      }
+   }
+   catch (err) {
+      console.log(err.message);
+      res.status(500).send("Internal server error");
+   }
+});
+
 
 //@route        DELETE "api/profile"
 //@desc         delete profile,user,posts

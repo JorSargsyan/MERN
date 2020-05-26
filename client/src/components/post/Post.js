@@ -7,6 +7,7 @@ import { getPost } from "../../actions/post"
 import {Link} from "react-router-dom"
 import CommentForm from "./CommentForm"
 import CommentItem from "./CommentItem"
+import './styles.scss'
 
 function Post({ getPost, post: { post, loading }, match }) {
 
@@ -21,6 +22,7 @@ function Post({ getPost, post: { post, loading }, match }) {
         loading || post === null ? (<Spinner />) : (<Fragment>
             <Link to="/posts" className="btn">Back</Link>
             <PostItem showActions={false} post={post} detail />
+            <p className='text-paragraph'>{post.text}</p>
             <CommentForm postId={post._id} />
             <div className="comments">
                 {

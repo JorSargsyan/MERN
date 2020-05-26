@@ -38,6 +38,7 @@ function PostForm({ addPost }) {
     }
 
     const [text, setText] = useState("");
+    const [title, setTitle] = useState('');
 
     return (
         <div className="post-form">
@@ -49,6 +50,7 @@ function PostForm({ addPost }) {
                 const data = new FormData();
                 data.append('text',text);
                 data.append('postPic',imageFile);
+                data.append('title', title);
                 addPost(data);
                 setText("")
             }}>
@@ -59,6 +61,7 @@ function PostForm({ addPost }) {
                         <button className="post-delete-btn" onClick={handleDeleteImage}><i className="fa fa-trash post-delete-icon"></i></button>
                     </div>
                 }
+                <input className="title-input" type="text" value={title} placeholder="Title" onChange={e => setTitle(e.target.value)} required />
                 <textarea
                     name="text"
                     cols="30"

@@ -1,4 +1,4 @@
-import { GET_PROFILE, PROFILE_ERROR, CLEAR_PROFILE, UPDATE_PROFILE ,GET_GITREPOS,GET_PROFILES, UPLOAD_PDF, DELETE_PDF } from "../actions/types"
+import { GET_PROFILE, PROFILE_ERROR, CLEAR_PROFILE, UPDATE_PROFILE ,GET_GITREPOS,GET_PROFILES, UPLOAD_PDF, DELETE_PDF, GET_USER_POSTS } from "../actions/types"
 
 const initialState = {
     profile: null,
@@ -30,6 +30,13 @@ export default function (state = initialState, { type, payload }) {
                 repos : payload,
                 loading:false
             }
+        case GET_USER_POSTS: {
+            return {
+                ...state,
+                userPosts: payload,
+                loading: false,
+            }
+        }
         case PROFILE_ERROR:
             return {
                 ...state,

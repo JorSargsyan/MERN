@@ -4,7 +4,7 @@ import Moment from "react-moment"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import { addLike, removeLike, deletePost } from "../../actions/post"
-function PostItem({ deletePost,detail = false, addLike, removeLike, post: { _id, text, name, user, likes, comments, date,postPic }, auth, showActions }) {
+function PostItem({ deletePost,detail = false, addLike, removeLike, post: { _id, text, name, user,title, likes, comments, date,postPic }, auth, showActions }) {
     return (
         <div className={`post-item-area ${detail && 'post-item-area-detail'}`}>
             <div className="post-img-area">
@@ -23,7 +23,7 @@ function PostItem({ deletePost,detail = false, addLike, removeLike, post: { _id,
                 </div>
                 <div>
                     <p className="my-1">
-                        {text}
+                        {title}
                     </p>
                     <p className="post-date">
                         Posted on <Moment format="YYYY/MM/DD">{date}</Moment>

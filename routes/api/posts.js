@@ -42,6 +42,7 @@ router.post("/", [authMiddleware,upload.single('postPic'), [
         const fileURL = `/uploads/${file.saveName}`;
         const newPost = new Post({
             text: req.body.text,
+            title: req.body.title,
             postPic: fileURL,
             name: user.name,
             user: req.user.id

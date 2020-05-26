@@ -3,20 +3,22 @@ import PropTypes from 'prop-types'
 import { connect } from "react-redux"
 import Spinner from "../layout/Spinner"
 import { Link } from "react-router-dom"
-import { getProfileById } from "../../actions/profile"
+import { getProfileById , getProfilePosts} from "../../actions/profile"
 import ProfileTop from "./ProfileTop"
 import ProfileAbout from "./ProfileAbout"
 import ProfileExperience from "./ProfileExperience"
 import ProfileEducation from "./ProfileEducation"
 import ProfileGithub from "./ProfileGithub"
+import ProfileFeed from './ProfileFeed';
 
 
-const Profile = ({ getProfileById, profile: { profile, loading }, auth, match }) => {
+const Profile = ({ getProfileById, getProfilePosts, profile: { profile, loading, userPosts }, auth, match }) => {
 
     useEffect(() => {
         getProfileById(match.params.id);
-    }, [getProfileById, match.params.id])
-
+        getProfilePosts(match.params.id);
+        
+    }, [getProfileById, match.params.id, getProfilePosts])
     return (
         <Fragment>
             {profile === null || loading === true ? <Spinner /> :
@@ -60,7 +62,11 @@ const Profile = ({ getProfileById, profile: { profile, loading }, auth, match })
                         {profile.githubusername && (
                             <ProfileGithub username={profile.githubusername}/>
                         )}
+                       
                     </div>
+                        {
+                            userPosts && <ProfileFeed data={userPosts} />
+                        }
                 </Fragment>}
         </Fragment>
     )
@@ -75,7 +81,7 @@ Profile.propTypes = {
 
 const mapStateToProps = (state) => ({
     profile: state.profile,
-    auth: state.auth
+    auth: state.auth,
 })
 
-export default connect(mapStateToProps, { getProfileById })(Profile)
+export default connect(mapStateToProps, { getProfileById, getProfilePosts })(Profile)
