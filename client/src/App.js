@@ -13,7 +13,6 @@ import Profiles from "./components/profiles/Profiles"
 import Profile from "./components/profile/Profile"
 import Posts from "./components/posts/Posts"
 import Post from "./components/post/Post"
-import MapView from './components/map';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import './App.css';
 //redux
@@ -41,11 +40,10 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar />
-          <Route exact path="/" component={Landing} />
-
-          <section className="container">
             <Alert />
             <Switch>
+              <Route exact path="/" component={Landing} />
+              <section className="container">
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/profiles" component={Profiles} />
@@ -55,13 +53,11 @@ const App = () => {
               <PrivateRoute exact path="/edit-profile" component={EditProfile} />
               <PrivateRoute exact path="/add-experience" component={AddExperience} />
               <PrivateRoute exact path="/add-education" component={AddEducation} />
-              <Route exact path="/map" component={MapView} />
               <PrivateRoute exact path="/posts" component={Posts} />
               <PrivateRoute exact path="/posts/new" component={PostForm} />
               <PrivateRoute exact path="/post/:id" component={Post} />
+              </section>
             </Switch>
-          </section>
-
         </Fragment>
       </Router>
     </Provider>

@@ -15,6 +15,7 @@ import ProfileFeed from './ProfileFeed';
 const Profile = ({ getProfileById, getProfilePosts, profile: { profile, loading, userPosts }, auth, match }) => {
 
     useEffect(() => {
+        debugger;
         getProfileById(match.params.id);
         getProfilePosts(match.params.id);
         
@@ -23,7 +24,7 @@ const Profile = ({ getProfileById, getProfilePosts, profile: { profile, loading,
         <Fragment>
             {profile === null || loading === true ? <Spinner /> :
                 <Fragment>
-                    <Link to="/profiles" className="btn btn-light">Back to Profiles</Link>
+                    <Link to="/profiles" className="btn btn-light" style={{background: '#17a2b8', color: 'white'}}>Back to Profiles</Link>
                     {auth.isAuthenticated && auth.loading === false && auth.user._id === profile.user._id &&
                         (<Link to="/edit-profile" className="btn btn-dark">Edit Profile </Link>)
                     }

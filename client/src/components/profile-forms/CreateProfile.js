@@ -48,7 +48,7 @@ function CreateProfile({createUpdateProfile,history}) {
         
     
     return (
-        <Fragment>
+        <div className="dashboard_admin">
             <h1 className="large text-primary">
                 Create Your Profile
       </h1>
@@ -155,7 +155,7 @@ function CreateProfile({createUpdateProfile,history}) {
                 <input type="submit" value="Save"  className="btn btn-primary my-1" />
                 <Link className="btn btn-light my-1" to="/dashboard">Go Back</Link>
             </form>
-        </Fragment>
+        </div>
     )
 }
 

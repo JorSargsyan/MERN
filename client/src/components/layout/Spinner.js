@@ -4,7 +4,15 @@ import spinner from "../../img/spinner.gif"
 function Spinner(props) {
     return (
         <Fragment>
-            <img style={{width:200,margin:"auto",display:"block",position: "absolute",top: "calc(40%)",left: "44%"}} src={spinner}></img>
+            <img style={{
+                width:140,
+                margin:"auto",
+                display:"block",
+                position: "absolute",
+                top: "calc(50vh - 50px)",
+                left: "calc(50vw - 70px)"
+                }} 
+            src={spinner}></img>
         </Fragment>
     )
 }

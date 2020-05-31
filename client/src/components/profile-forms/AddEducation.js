@@ -40,7 +40,7 @@ function AddEducation({addEducation,history}) {
     }
 
     return (
-        <Fragment>
+        <div className="dashboard_admin">
             <h1 className="large text-primary">
                 Add Your Education
       </h1>
@@ -105,10 +105,10 @@ function AddEducation({addEducation,history}) {
                         onChange={e=>onChange(e)}
                     ></textarea>
                 </div>
-                <input type="submit" className="btn btn-primary my-1" />
+                <input type="submit" className="btn btn-primary my-1" value="Submit"/>
                 <Link className="btn btn-light my-1" to="/dashboard">Go Back</Link>
             </form>
-        </Fragment>
+        </div>
     )
 }
 

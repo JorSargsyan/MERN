@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import { addLike, removeLike, deletePost } from "../../actions/post"
 function PostItem({ deletePost,detail = false, addLike, removeLike, post: { _id, text, name, user,title, likes, comments, date,postPic }, auth, showActions }) {
+    debugger;
     return (
         <div className={`post-item-area ${detail && 'post-item-area-detail'}`}>
             <div className="post-img-area">
@@ -29,7 +30,7 @@ function PostItem({ deletePost,detail = false, addLike, removeLike, post: { _id,
                         Posted on <Moment format="YYYY/MM/DD">{date}</Moment>
                     </p>
                     {
-                        showActions && (<Fragment>
+                        showActions && _id && (<Fragment>
                             <button onClick={() => addLike(_id)} type="button" className="btn btn-light">
                                 <i className="fas fa-thumbs-up"></i>
                                 <span>{likes.length > 0 && <span>{" "}{likes.length}</span>}</span>
@@ -41,7 +42,7 @@ function PostItem({ deletePost,detail = false, addLike, removeLike, post: { _id,
                                 Discussion {comments.length > 0 && <span className='comment-count'>{comments.length}</span>}
                             </Link>
                             {
-                                !auth.loading && user._id == auth.user._id && (
+                                !auth.loading && auth.user && user._id == auth.user._id && (
                                     <button
                                         onClick={e => deletePost(_id)}
                                         type="button"

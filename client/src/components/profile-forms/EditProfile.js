@@ -68,7 +68,7 @@ function EditProfile({ profile: { profile, loading }, createUpdateProfile, histo
 
 
     return (
-        <Fragment>
+        <div className="dashboard_admin">
             <h1 className="large text-primary">
                 Edit Your Profile
       </h1>
@@ -175,7 +175,7 @@ function EditProfile({ profile: { profile, loading }, createUpdateProfile, histo
                 <input type="submit" value="Save" className="btn btn-primary my-1" />
                 <Link className="btn btn-light my-1" to="/dashboard">Go Back</Link>
             </form>
-        </Fragment>
+        </div>
     )
 }
 

@@ -22,7 +22,10 @@ function Post({ getPost, post: { post, loading }, match }) {
         loading || post === null ? (<Spinner />) : (<Fragment>
             <Link to="/posts" className="btn">Back</Link>
             <PostItem showActions={false} post={post} detail />
-            <p className='text-paragraph'>{post.text}</p>
+            <div className="text-outer">
+                <p className='text-paragraph'>{post.text}</p>
+            </div>
+           
             <CommentForm postId={post._id} />
             <div className="comments">
                 {

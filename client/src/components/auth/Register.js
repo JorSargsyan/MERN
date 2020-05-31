@@ -49,10 +49,6 @@ const Register = (props) => {
                     </div>
                     <div className="form-group">
                         <input type="email" placeholder="Email Address" onChange={e => onChange(e)} name="email" value={email} required />
-                        <small className="form-text"
-                        >This site uses Gravatar so if you want a profile image, use a
-              Gravatar email</small
-                        >
                     </div>
                     <div className="form-group">
                         <input

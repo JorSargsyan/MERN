@@ -10,7 +10,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     }
 
     const authLinks = (
-        <ul style={{width: 'calc(100% - 260px)', justifyContent: 'space-between'}}>
+        <ul className="navbar_logged" style={{width: 'calc(100% - 260px)', justifyContent: 'space-between'}}>
             <div style={{display: 'flex' }}>
                 <li>
                     <Link to="/profiles">
@@ -20,11 +20,6 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
                 <li>
                     <Link to="/posts">
                         Posts
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/map">
-                        Map
                     </Link>
                 </li>
             </div>
@@ -50,7 +45,6 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     const guessLinks = (
         <ul>
             <li><Link to="/profiles">Developers</Link></li>
-            <li><Link to="/map">Developer's Map</Link></li>
             <li><Link to="/register">Register</Link></li>
             <li><Link to="/login">Login</Link></li>
         </ul>

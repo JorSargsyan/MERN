@@ -36,11 +36,10 @@ function Dashboard() {
     }
 
     const handleDeleteCV = () => {
-        debugger;
         dispatch(deletePDF());
     }
 
-    return profileData.loading === true ? <Spinner /> : <Fragment >
+    return profileData.loading === true ? <Spinner /> : <div className="dashboard_admin">
         <h1 className="large text-primary">Dashboard</h1>
         <div className="lead" style={{alignItems: 'center',justifyContent:'space-between',display: 'flex',width: '26vw'}}>
             <i className="fas fa-user"></i>
@@ -64,8 +63,9 @@ function Dashboard() {
                     </div>
                 }
                
-                <Experience experience={profileData.profile.experience} />
-                <Education education={profileData.profile.education}/>
+                {profileData.profile.experience.length ? <Experience experience={profileData.profile.experience} /> : null} 
+                {profileData.profile.education.length ? <Education education={profileData.profile.education}/> : null}
+                
                 <div className="my-2">
                     <button onClick={()=>dispatch(deleteAccount())} className="btn btn-danger"><i className="fas fa-user-minus"></i>  Delete my Account</button>
                 </div>
@@ -74,7 +74,7 @@ function Dashboard() {
                 <p>You have not created the profile</p>
                 <Link className="btn btn-primary mt-1" to="/create-profile">Create It!</Link>
             </Fragment>}
-    </Fragment>
+    </div>
 }
 
 
