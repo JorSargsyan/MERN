@@ -25,17 +25,16 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
             </div>
             <div style={{display: 'flex' }}>
                 <li>
+                    <Link to="/dashboard">
+                        Dashboard
+                    </Link>
+                </li>
+                <li>
                     <a href="#" onClick={handleLogout}>
-                        <i className="fas fa-sign-out-alt"></i>
+                        <i className="fas fa-sign-out-alt" style={{color : "red"}}></i>
                         {" "}
                         <span className="hide-sm">Logout</span>
                     </a>
-                </li>
-                <li>
-                    <Link to="/dashboard">
-                        <i className="fas fa-sign-out-alt"></i>
-                        Dashboard
-                    </Link>
                 </li>
             </div>
         </ul>

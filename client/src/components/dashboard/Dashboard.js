@@ -41,14 +41,14 @@ function Dashboard() {
 
     return profileData.loading === true ? <Spinner /> : <div className="dashboard_admin">
         <h1 className="large text-primary">Dashboard</h1>
-        <div className="lead" style={{alignItems: 'center',justifyContent:'space-between',display: 'flex',width: '26vw'}}>
-            <i className="fas fa-user"></i>
-            <h4>Welcome {user && user.name}</h4>
+        <div className="lead" className="dashboard_lead" style={{alignItems: 'center',justifyContent:'space-between',display: 'flex',width: '50%'}}>
             <ImageUpload 
                 imageVal={imageVal}
                 handleChange={handleUploadChange}
                 handleSubmit={handleImageUploadSubmit}
             />
+            <h4>Welcome {user && user.name}</h4>
+           
         </div>
 
         {profileData.profile !== null && profileData.loading === false ?

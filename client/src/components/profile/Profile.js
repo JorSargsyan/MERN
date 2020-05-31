@@ -15,7 +15,6 @@ import ProfileFeed from './ProfileFeed';
 const Profile = ({ getProfileById, getProfilePosts, profile: { profile, loading, userPosts }, auth, match }) => {
 
     useEffect(() => {
-        debugger;
         getProfileById(match.params.id);
         getProfilePosts(match.params.id);
         

@@ -5,9 +5,9 @@ import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import { addLike, removeLike, deletePost } from "../../actions/post"
 function PostItem({ deletePost,detail = false, addLike, removeLike, post: { _id, text, name, user,title, likes, comments, date,postPic }, auth, showActions }) {
-    debugger;
-    return (
-        <div className={`post-item-area ${detail && 'post-item-area-detail'}`}>
+    const layout = (
+        <div className={`post-item-area post-item-area-detail`}>
+           {comments.length > 0 && <span className='comment-count'>{comments.length}</span>}
             <div className="post-img-area">
                 <img className="post-image" src={`${postPic}`} alt="postPic"/>
             </div>
@@ -31,20 +31,26 @@ function PostItem({ deletePost,detail = false, addLike, removeLike, post: { _id,
                     </p>
                     {
                         showActions && _id && (<Fragment>
-                            <button onClick={() => addLike(_id)} type="button" className="btn btn-light">
+                            <button onClick={(e) => {
+                                e.preventDefault();
+                                addLike(_id)
+                            }} type="button" className="btn btn-light">
                                 <i className="fas fa-thumbs-up"></i>
                                 <span>{likes.length > 0 && <span>{" "}{likes.length}</span>}</span>
                             </button>
-                            <button type="button" onClick={() => removeLike(_id)} className="btn btn-light">
+                            <button type="button" onClick={(e) => {
+                                e.preventDefault();
+                                removeLike(_id)
+                            }} className="btn btn-light">
                                 <i className="fas fa-thumbs-down"></i>
                             </button>
-                            <Link to={`/post/${_id}`} className="btn btn-primary">
-                                Discussion {comments.length > 0 && <span className='comment-count'>{comments.length}</span>}
-                            </Link>
                             {
                                 !auth.loading && auth.user && user._id == auth.user._id && (
                                     <button
-                                        onClick={e => deletePost(_id)}
+                                        onClick={e => {
+                                            e.preventDefault();
+                                            deletePost(_id)
+                                        }}
                                         type="button"
                                         className="btn btn-danger"
                                     >
@@ -62,6 +68,12 @@ function PostItem({ deletePost,detail = false, addLike, removeLike, post: { _id,
             </div>
         </div>
     )
+
+    return  ( 
+        <Link to={`/post/${_id}`} style={{width: "100%"}} >
+            {layout}
+        </Link>
+    );
 }
 
 PostItem.propTypes = {

@@ -7,14 +7,16 @@ import { getPost } from "../../actions/post"
 import {Link} from "react-router-dom"
 import CommentForm from "./CommentForm"
 import CommentItem from "./CommentItem"
+import { getProfiles } from '../../actions/profile';
 import './styles.scss'
 
-function Post({ getPost, post: { post, loading }, match }) {
+function Post({ getPost,getProfiles, post: { post, loading }, match }) {
 
 
     useEffect(() => {
         getPost(match.params.id);
-    }, [getPost, match.params.id])
+        getProfiles();
+    }, [getPost, match.params.id]);
 
 
 
@@ -48,5 +50,5 @@ const mapStateToProps = (state) => ({
     post: state.post
 })
 
-export default connect(mapStateToProps, { getPost })(Post)
+export default connect(mapStateToProps, { getPost, getProfiles })(Post)
 

@@ -159,12 +159,18 @@ img {
   color: #333;
 }
 
+
 .alert {
   padding: 0.8rem;
   margin: 1rem 0;
   opacity: 0.9;
   background: var(--light-color);
   color: #333;
+  width: 250px;
+  position: fixed;
+  top: 50px;
+  right: 30px;
+  border-radius: 15px;
 }
 
 .btn-primary,
@@ -289,6 +295,10 @@ img {
 
 .form .social-input {
   display: flex;
+}
+
+.post-item-area{
+  position: relative;
 }
 
 .form .social-input i {
@@ -521,7 +531,7 @@ img {
 
 .post {
   display: grid;
-  grid-template-columns: 1fr 10fr;
+  grid-template-columns: 1fr 5fr;
   grid-gap: 2rem;
   align-items: center;
   background-color: #e4e4e4;
@@ -531,12 +541,46 @@ img {
   text-align: center;
 }
 
-.post .comment-count {
+.comment-count {
   background: var(--light-color);
   color: var(--primary-color);
   padding: 0.1rem 0.2rem;
   border-radius: 5px;
   font-size: 0.8rem;
+  color: white;
+  background: red;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  top: 10px;
+  right: 10px;
+}
+
+.dashboard_lead h4 {
+  font-size: 18px;
+}
+
+.comment-item {
+  border-radius: 60px;
+  position: relative;
+  background: white;
+  box-shadow: 0 0 13px 0px #545454; 
+}
+
+.comment-item .detete-comment{
+  position: absolute;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    top: -5px;
+    right: -10px;
 }
 
 .post .post-date {
@@ -662,11 +706,30 @@ img {
 
   .post {
     grid-template-columns: 1fr;
-    grid-auto-flow: column;
+    grid-auto-flow: row;
+  }
+
+  .post-image{ 
+    height: 200px!important;
+  }
+  .post-item-area .my-1{
+    font-size: 16px!important;
   }
 
   .post a,
   .post button {
     padding: 0.3rem 0.4rem;
   }
+  .dashboard_lead{
+    width: 100%!important;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+
+
+
+  .dashboard_admin .my-2{
+    font-size: 16px;
+  }
+  
 }

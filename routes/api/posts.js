@@ -202,12 +202,12 @@ router.post("/comment/:id", [authMiddleware,[
 
     try {
         const user = await User.findById(req.user.id).select("-password").populate('user').populate({path:'comments.user', select:['avatar','_id']});
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.id).populate('user').populate({path:'comments.user', select:['avatar','_id']});
 
         const newComment = {
             text:req.body.text,
             name : user.name,
-            user : req.user.id
+            user
         }
 
         post.comments.unshift(newComment);

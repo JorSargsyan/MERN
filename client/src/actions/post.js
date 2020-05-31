@@ -183,7 +183,6 @@ export const addComment = (postId,formData) => {
                 payload: res.data
             })
 
-
             dispatch(setAlert("Comment added", "success"));
 
 
